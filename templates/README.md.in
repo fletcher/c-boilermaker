@@ -32,6 +32,19 @@ the actual compilation.  Once you perform either step above, `cd build`
 or `cd build-test` and then `make` (and `./run_tests` or `ctest` or
 `make test` for the unit testing variant).
 
+
+### Storyboards ###
+
+If you are using macOS storyboards, they need to be compiled first.
+Xcode handles this automatically.  It would be possible to add this
+behavior to CMake, but would add complexity for something that is
+unlikely to be really necessary.
+
+To compile you, can use a command like:
+
+	ibtool --compile Main.storyboardc Main.storyboard
+
+
 ## License ##
 
 	@My_Project_License_Indented@
