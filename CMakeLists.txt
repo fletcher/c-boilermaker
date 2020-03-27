@@ -99,6 +99,7 @@ add_library("${My_Project_Title}"
 	${src_files}
 	${private_headers}
 	${public_headers}
+	${resources}
 )
 
 set_target_properties("${My_Project_Title}"
@@ -110,7 +111,7 @@ set_target_properties("${My_Project_Title}"
 	XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER "${My_Project_Identifier}"
 	XCODE_ATTRIBUTE_MARKETING_VERSION ${My_Project_Version}
 	RESOURCE "${resources}"
-	PUBLIC_HEADER "src/libBoilerplate.h"
+	PUBLIC_HEADER "${public_headers}"
 )
 
 # Link to other libraries
