@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+        <key>CFBundleDevelopmentRegion</key>
+        <string>$(DEVELOPMENT_LANGUAGE)</string>
+        <key>CFBundleExecutable</key>
+        <string>${My_Project_Title}</string>
+        <key>CFBundleIconFile</key>
+        <string>${MACOSX_BUNDLE_ICON_FILE}</string>
+        <key>CFBundleIdentifier</key>
+        <string>${My_Project_Identifier}</string>
+        <key>CFBundleInfoDictionaryVersion</key>
+        <string>6.0</string>
+        <key>CFBundleLongVersionString</key>
+        <string>${MACOSX_BUNDLE_LONG_VERSION_STRING}</string>
+        <key>CFBundleName</key>
+        <string>${My_Project_Title}</string>
+        <key>CFBundlePackageType</key>
+        <string>APPL</string>
+        <key>CFBundleShortVersionString</key>
+        <string>${My_Project_Version}</string>
+        <key>CFBundleSupportedPlatforms</key>
+        <array>
+                <string>MacOSX</string>
+        </array>
+        <key>CFBundleVersion</key>
+        <string>${My_Project_Version}</string>
+        <key>CSResourcesFileMapped</key>
+        <true/>
+        <key>NSHumanReadableCopyright</key>
+        <string>${MACOSX_BUNDLE_COPYRIGHT}</string>
+        <key>LSMinimumSystemVersion</key>
+        <string>$(MACOSX_DEPLOYMENT_TARGET)</string>
+        <key>NSMainStoryboardFile</key>
+        <string>${main_storyboard}</string>
+        <key>NSPrincipalClass</key>
+        <string>NSApplication</string>
+</dict>
+</plist>

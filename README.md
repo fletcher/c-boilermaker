@@ -2,7 +2,7 @@
 
 |            |                           |  
 | ---------- | ------------------------- |  
-| Title:     | libBoilermaker        |  
+| Title:     | BoilermakerApp        |  
 | Author:    | Fletcher T. Penney       |  
 | Date:      | 2020-03-26 |  
 | Copyright: | Copyright © 2020 Fletcher T. Penney.    |  

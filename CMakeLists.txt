@@ -1,6 +1,5 @@
 #
-#	Boilerplate CMake configuration for a cross-platform library, 
-#	including configuration for a static framework on Xcode/macOS/iOS
+#	Boilerplate CMake configuration for a macOS application.
 #
 #	Designed by Fletcher T. Penney
 #	See the LICENSE file for copyright and licensing information.
@@ -15,7 +14,7 @@ cmake_minimum_required(VERSION 2.6)
 
 # Project Description
 
-set (My_Project_Title "libBoilermaker")
+set (My_Project_Title "BoilermakerApp")
 set (My_Project_Description "Standardized configuration to simplify your life")
 set (My_Project_Author "Fletcher T. Penney")
 set (My_Project_Revised_Date "2020-03-26")
@@ -25,28 +24,31 @@ set (My_Project_Version_Patch 0)
 
 set (My_Project_Copyright_Date "2020")
 
-set (My_Project_Identifier "net.fletcherpenney.libboilermaker")
+set (My_Project_Identifier "net.fletcherpenney.boilermaker")
 
 # Source files and headers
 
 set(src_files
-	src/bar.c
-	src/foo.c
+	src/main.m
+
+	src/AppDelegate.m
+	src/ViewController.m
 )
 
 set(public_headers
-	src/libBoilerplate.h
 )
 
 set(private_headers
-	src/bar.h
-	src/foo.h
+	src/AppDelegate.h
+	src/ViewController.h
 )
 
 set(resources
+	resources/Main.storyboardc
 )
 
 set(main_storyboard
+	Main
 )
 
 # Include other CMake projects?
@@ -65,7 +67,7 @@ set(framework_search_paths
 )
 
 # Link to Cocoa Framework?
-# set (link_to_cocoa 1)
+set (link_to_cocoa 1)
 
 
 # =======================
@@ -94,8 +96,8 @@ include_directories(${PROJECT_SOURCE_DIR}/test)
 
 # Configure library/framework
 
-add_library("${My_Project_Title}"
-	STATIC
+add_executable("${My_Project_Title}"
+	MACOSX_BUNDLE src/main.m
 	${src_files}
 	${private_headers}
 	${public_headers}
@@ -104,14 +106,13 @@ add_library("${My_Project_Title}"
 
 set_target_properties("${My_Project_Title}"
 	PROPERTIES
-	PREFIX ""
-	FRAMEWORK TRUE
-	FRAMEWORK_VERSION A
-	MACOSX_FRAMEWORK_IDENTIFIER "${My_Project_Identifier}"
+	MACOSX_BUNDLE TRUE
 	XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER "${My_Project_Identifier}"
 	XCODE_ATTRIBUTE_MARKETING_VERSION ${My_Project_Version}
+	MACOSX_BUNDLE_INFO_STRING "${PROJECT_NAME} Version ${My_Project_Version}, ${My_Project_Copyright} All rights reserved."
+	MACOSX_BUNDLE_COPYRIGHT "${My_Project_Copyright}  All rights reserved."
 	RESOURCE "${resources}"
-	PUBLIC_HEADER "${public_headers}"
+	XCODE_ATTRIBUTE_FRAMEWORK_SEARCH_PATHS "${framework_search_paths}"
 )
 
 # Link to other libraries
@@ -123,6 +124,13 @@ target_link_libraries("${My_Project_Title}"
 if (link_to_cocoa)
 	target_link_libraries("${My_Project_Title}" "-framework Cocoa")
 endif (link_to_cocoa)
+
+# Use custom Info.plist template
+# Original was here:
+#	/usr/local/Cellar/cmake/3.15.5/share/cmake/Modules/MacOSXBundleInfo.plist.in
+set_property(TARGET "${My_Project_Title}"
+	PROPERTY MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/templates/Info.plist.in"
+)
 
 
 # ======================
