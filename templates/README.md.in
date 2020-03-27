@@ -1,0 +1,37 @@
+## About ##
+
+|            |                           |  
+| ---------- | ------------------------- |  
+| Title:     | @My_Project_Title@        |  
+| Author:    | @My_Project_Author@       |  
+| Date:      | @My_Project_Revised_Date@ |  
+| Copyright: | @My_Project_Copyright@    |  
+| Version:   | @My_Project_Version@      |  
+
+
+## How to build ##
+
+### macOS ###
+
+You can automatically build Xcode projects:
+
+*	`make xcode` -- regular build
+*	`make xcode-test` -- build `run_tests` to perform CuTest unit tests
+
+The Xcode projects can then be opened in Xcode, or you can build from
+the command line via `xcodebuild`.
+
+
+### Other ###
+
+*	`make` -- regular build
+*	`make-test` -- build `run_tests` to perform CuTest unit tests
+
+These steps configure a build directory, but you still have to perform
+the actual compilation.  Once you perform either step above, `cd build`
+or `cd build-test` and then `make` (and `./run_tests` or `ctest` or
+`make test` for the unit testing variant).
+
+## License ##
+
+	@My_Project_License_Indented@
