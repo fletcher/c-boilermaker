@@ -67,6 +67,9 @@ set(framework_search_paths
 # Link to Cocoa Framework?
 # set (link_to_cocoa 1)
 
+# Enable ARC for Obj-C?
+# set (enable_arc 1)
+
 
 # =======================
 # Leave the rest alone...
@@ -123,6 +126,13 @@ target_link_libraries("${My_Project_Title}"
 if (link_to_cocoa)
 	target_link_libraries("${My_Project_Title}" "-framework Cocoa")
 endif (link_to_cocoa)
+
+# Enable ARC
+if (enable_arc)
+	set_property (TARGET "${My_Project_Title}"
+		APPEND_STRING PROPERTY COMPILE_FLAGS "-fobjc-arc"
+	)
+endif (enable_arc)
 
 
 # ======================
