@@ -195,6 +195,11 @@ else()
 			${test_files}
 		)
 
+		# Link to Apple Cocoa Framework?
+		if (link_to_cocoa)
+			target_link_libraries(run_tests "-framework Cocoa")
+		endif (link_to_cocoa)
+
 		enable_testing()
 
 		add_test( test ${PROJECT_BINARY_DIR}/run_tests)
