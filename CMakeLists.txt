@@ -53,6 +53,7 @@ set(main_storyboard
 # add_subdirectory(submodules/foo)
 
 # Libraries for linking
+# on macOS can link to frameworks using: "-framework QuartzCore", for example
 set(libraries_to_link
 )
 
