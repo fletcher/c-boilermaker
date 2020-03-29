@@ -214,10 +214,22 @@ else()
 			${test_files}
 		)
 
+		# Link to other libraries
+		target_link_libraries(run_tests
+			${libraries_to_link}
+		)
+
 		# Link to Apple Cocoa Framework?
 		if (link_to_cocoa)
 			target_link_libraries(run_tests "-framework Cocoa")
 		endif (link_to_cocoa)
+
+		# Enable ARC
+		if (enable_arc)
+			set_property (TARGET run_tests
+				APPEND_STRING PROPERTY COMPILE_FLAGS "-fobjc-arc"
+			)
+		endif (enable_arc)
 
 		enable_testing()
 
@@ -237,10 +249,79 @@ endif()
 # Build Installer with CPack
 # ==========================
 
+set (CPACK_PACKAGE_DESCRIPTION_SUMMARY "${My_Project_Description}")
+set (CPACK_PACKAGE_VERSION "${My_Project_Version_Major}.${My_Project_Version_Minor}.${My_Project_Version_Patch}")
+set (CPACK_PACKAGE_VERSION_MAJOR "${My_Project_Version_Major}")
+set (CPACK_PACKAGE_VERSION_MINOR "${My_Project_Version_Minor}")
+set (CPACK_PACKAGE_VERSION_PATCH "My_Project_Version_Patch")
+
+configure_file (
+	"${PROJECT_SOURCE_DIR}/LICENSE"
+	"${PROJECT_BINARY_DIR}/LICENSE.txt"
+)
+configure_file (
+	"${PROJECT_SOURCE_DIR}/README.md"
+	"${PROJECT_BINARY_DIR}/README.txt"
+)
+
+set (CPACK_RESOURCE_FILE_LICENSE "${PROJECT_BINARY_DIR}/LICENSE.txt")
+set (CPACK_RESOURCE_FILE_README "${PROJECT_BINARY_DIR}/README.txt")
+
 if (DEFINED TEST)
 	# Don't install the test suite
 else()
+	if (APPLE)
+		# Apple Builds
+
+		if (DEFINED ZIP)
+			set (CPACK_GENERATOR ZIP)
+		else (DEFINED ZIP)
+			set (CPACK_GENERATOR productbuild)
+		endif (DEFINED ZIP)
+	else (APPLE)
+		if (WIN32)
+			# Windows Builds
+
+			if (DEFINED ZIP)
+				set (CPACK_GENERATOR ZIP)
+			else (DEFINED ZIP)
+				set (CPACK_GENERATOR NSIS)
+			endif (DEFINED ZIP)
+		elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+			# Linux
+			set (CPACK_GENERATOR ZIP)
+		endif (WIN32)
+	endif (APPLE)
+
+	# Install Target
+	install (TARGETS ${My_Project_Title}
+		DESTINATION bin
+		COMPONENT Main
+	)
+	set (CPACK_COMPONENT_MAIN_DISPLAY_NAME "${My_Project_Title}")
+	set (CPACK_COMPONENT_MAIN_DESCRIPTION "Install ${My_Project_Title}.")
+
+	# Install Headers
+	install(FILES
+		${public_headers}
+		DESTINATION include/${My_Project_Title}
+		COMPONENT Headers
+	)
+	set (CPACK_COMPONENT_HEADERS_DISPLAY_NAME "Development")
+	set (CPACK_COMPONENT_HEADERS_DESCRIPTION "Install the public headers for development use.")
+
+	# Install Documentation
+	install(FILES
+		"${PROJECT_BINARY_DIR}/LICENSE.txt"
+		"${PROJECT_BINARY_DIR}/README.txt"
+		COMPONENT Docs
+		DESTINATION .
+	)
+	set (CPACK_COMPONENT_DOCS_DISPLAY_NAME "Documentation")
+	set (CPACK_COMPONENT_DOCS_DESCRIPTION "Install README and LICENSE.")
+
+	set (CPACK_COMPONENTS_ALL Main Headers)
 
 endif (DEFINED TEST)
 
-# TODO: Configure public headers for installation?  https://cmake.org/cmake/help/v3.0/prop_tgt/PUBLIC_HEADER.html
+include(CPack)
