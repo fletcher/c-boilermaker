@@ -293,14 +293,20 @@ else()
 	set (CPACK_COMPONENT_MAIN_DISPLAY_NAME "${My_Project_Title}")
 	set (CPACK_COMPONENT_MAIN_DESCRIPTION "Install ${My_Project_Title}.")
 
-	# Install Headers
-	install(FILES
-		${public_headers}
-		DESTINATION include/${My_Project_Title}
-		COMPONENT Headers
-	)
-	set (CPACK_COMPONENT_HEADERS_DISPLAY_NAME "Development")
-	set (CPACK_COMPONENT_HEADERS_DESCRIPTION "Install the public headers for development use.")
+	if (public_headers)
+		# Install Headers
+		install(FILES
+			${public_headers}
+			DESTINATION include/${My_Project_Title}
+			COMPONENT Headers
+		)
+		set (CPACK_COMPONENT_HEADERS_DISPLAY_NAME "Development")
+		set (CPACK_COMPONENT_HEADERS_DESCRIPTION "Install the public headers for development use.")
+
+		set (CPACK_COMPONENTS_ALL Main Headers)
+	else (public_headers)
+		set (CPACK_COMPONENTS_ALL Main)
+	endif (public_headers)
 
 	# Install Documentation
 	install(FILES
