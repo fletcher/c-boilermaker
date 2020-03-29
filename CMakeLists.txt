@@ -318,8 +318,6 @@ else()
 	set (CPACK_COMPONENT_DOCS_DISPLAY_NAME "Documentation")
 	set (CPACK_COMPONENT_DOCS_DESCRIPTION "Install README and LICENSE.")
 
-	set (CPACK_COMPONENTS_ALL Main Headers)
-
 endif (DEFINED TEST)
 
 include(CPack)
