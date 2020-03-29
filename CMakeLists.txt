@@ -44,7 +44,7 @@ set(private_headers
 )
 
 set(resources
-	resources/Main.storyboardc
+	resources/Main.storyboard
 )
 
 set(main_storyboard
