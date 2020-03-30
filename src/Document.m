@@ -7,6 +7,7 @@
 //
 
 #import "Document.h"
+#import "ViewController.h"
 
 @interface Document ()
 
@@ -80,15 +81,15 @@
 }
 
 
-- (void)saveDocument:(id)sender {
-	[super saveDocument:sender];
+- (void)setFileURL:(NSURL *)fileURL {
+	[super setFileURL:fileURL];
 
-	// Update window positioning if we have been saved
 	NSWindowController * wc = [[self windowControllers] firstObject];
 
-	if (self.fileURL && ![self.fileURL.path isEqualToString:@""]) {
-		[[wc window] setFrameAutosaveName:self.fileURL.path];
-		[[wc window] saveFrameUsingName:self.fileURL.path];
+	// Update window positioning if we have been saved
+	if (fileURL && ![fileURL.path isEqualToString:@""]) {
+		[[wc window] setFrameAutosaveName:fileURL.path];
+		[[wc window] saveFrameUsingName:fileURL.path];
 	} else {
 		[[wc window] setFrameAutosaveName:@"Unsaved Document"];
 		[[wc window] saveFrameUsingName:@"Unsaved Document"];
