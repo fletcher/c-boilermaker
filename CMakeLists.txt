@@ -34,6 +34,9 @@ set(src_files
 	src/AppDelegate.m
 	src/Document.m
 	src/ViewController.m
+
+	src/DemoPrefsViewController.m
+	src/MASPreferencesWindowController.m
 )
 
 set(public_headers
@@ -43,10 +46,16 @@ set(private_headers
 	src/AppDelegate.h
 	src/Document.h
 	src/ViewController.h
+
+	src/DemoPrefsViewController.h
+	src/MASPreferencesViewController.h
+	src/MASPreferencesWindowController.h
 )
 
 set(resources
 	resources/Main.storyboard
+
+	resources/MASPreferencesWindow.xib
 )
 
 set(main_storyboard
