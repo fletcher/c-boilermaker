@@ -8,6 +8,9 @@
 
 #import "AppDelegate.h"
 
+#import "MASPreferencesWindowController.h"
+#import "DemoPrefsViewController.h"
+
 @interface AppDelegate ()
 
 @end
@@ -30,6 +33,28 @@
 
 
 + (void) registerDefaults {
+}
+
+
+#pragma mark - Preferences
+
+- (NSWindowController *) preferencesWindowController {
+    static MASPreferencesWindowController * wc;
+    static dispatch_once_t onceToken;
+
+    dispatch_once(&onceToken, ^ {
+        NSViewController * demo = [[DemoPrefsViewController alloc] init];
+        [(DemoPrefsViewController *)demo setViewIdentifier:@"Demo 1"];
+        NSViewController * demo2 = [[DemoPrefsViewController alloc] init];
+        wc = [[MASPreferencesWindowController alloc] initWithViewControllers:@[demo, demo2] title:@"Preferences"];
+    });
+
+    return wc;
+}
+
+
+- (IBAction) openPreferences:(id)sender {
+    [[self preferencesWindowController] showWindow:self];
 }
 
 
