@@ -117,6 +117,8 @@ add_executable("${My_Project_Title}"
 	${resources}
 )
 
+string (REPLACE ";" " " framework_search_paths_string "${framework_search_paths}")
+
 set_target_properties("${My_Project_Title}"
 	PROPERTIES
 	MACOSX_BUNDLE TRUE
@@ -125,7 +127,7 @@ set_target_properties("${My_Project_Title}"
 	MACOSX_BUNDLE_INFO_STRING "${PROJECT_NAME} Version ${My_Project_Version}, ${My_Project_Copyright} All rights reserved."
 	MACOSX_BUNDLE_COPYRIGHT "${My_Project_Copyright}  All rights reserved."
 	RESOURCE "${resources}"
-	XCODE_ATTRIBUTE_FRAMEWORK_SEARCH_PATHS "${framework_search_paths}"
+	XCODE_ATTRIBUTE_FRAMEWORK_SEARCH_PATHS "${XCODE_ATTRIBUTE_FRAMEWORK_SEARCH_PATHS} ${framework_search_paths_string}"
 )
 
 # Link to other libraries
