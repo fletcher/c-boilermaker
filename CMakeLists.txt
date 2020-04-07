@@ -106,6 +106,8 @@ add_library("${My_Project_Title}"
 	${resources}
 )
 
+string (REPLACE ";" " " framework_search_paths_string "${framework_search_paths}")
+
 set_target_properties("${My_Project_Title}"
 	PROPERTIES
 	PREFIX ""
@@ -115,6 +117,7 @@ set_target_properties("${My_Project_Title}"
 	XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER "${My_Project_Identifier}"
 	XCODE_ATTRIBUTE_MARKETING_VERSION ${My_Project_Version}
 	RESOURCE "${resources}"
+	XCODE_ATTRIBUTE_FRAMEWORK_SEARCH_PATHS "${XCODE_ATTRIBUTE_FRAMEWORK_SEARCH_PATHS} ${framework_search_paths_string}"
 	PUBLIC_HEADER "${public_headers}"
 )
 
