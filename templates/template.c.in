@@ -28,6 +28,11 @@
 
 
 #ifdef TEST
+#include "CuTest.h"
+#endif
+
+
+#ifdef TEST
 // Remove static keyword to enable this test
 static void Test_void_function(CuTest* tc) {
 	CuAssertIntEquals(tc, 0, 0);
