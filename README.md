@@ -94,7 +94,58 @@ them.
 [c-template]: https://github.com/fletcher/c-template
 
 
-## How to build ##
+## Flavors ##
+
+There are several different branches of this project, each of which is
+customized for a different purpose:
+
+*	`master` -- default branch that builds a static framework.  This should be
+	usable for macOS and iOS (not tested on iOS yet), as well as other systems
+	(as a static library)
+
+*	`mac-app` -- modified to create a macOS application.
+
+*	`mac-app-doc-based` -- modified version of `mac-app` to create a macOS
+	document-based application.  I have used this as a starting point for a new
+	version of an existing macOS application, and it is working great. 
+
+*	`ios-app` -- modified to create an IOS application.  Works in my tests, but
+	I have not done anything "real" with it yet.  Needs more fleshing out.
+
+*	`ios-app-doc-based` -- document-based application for iOS.  Works in quick
+	tests, but again, the iOS flavors have not been used for anything "real"
+	yet, but I plan to start working on an iOS port of an app relatively soon
+	that will help flesh this out.
+
+
+## How to Use This Template ##
+
+I use a short shell script to create a new git repo and initialize with the
+desired branch of the boilerplate template:
+
+	#!/bin/sh
+
+	git init new-project
+
+	cd new-project
+
+	git remote add "template" https://github.com/fletcher/c-boilermaker.git
+
+	git pull template mac-app
+
+	git flow init -d
+
+	git checkout develop
+
+
+It also initializes git flow using the default settings, and moves to the
+development branch.  By storing the `template` branch, I can later use `git
+pull template` in order to update the project with any fixes or improvements I
+make to the upstream boilermaker template (being careful with merge conflict
+resolution of course.)
+
+
+## How to Build ##
 
 ### macOS ###
 
