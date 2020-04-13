@@ -1,15 +1,12 @@
 //
 //  RAPAppDelegate.m
-//  Boilerplate macOS app
+//  Boilerplate iOS app
 //
-//  Created by Fletcher T. Penney on 3/25/20.
+//  Created by Fletcher T. Penney on 4/13/20.
 //  Copyright © 2020 Fletcher T. Penney. All rights reserved.
 //
 
 #import "AppDelegate.h"
-
-#import "MASPreferencesWindowController.h"
-#import "DemoPrefsViewController.h"
 
 @interface AppDelegate ()
 
@@ -17,16 +14,13 @@
 
 @implementation AppDelegate
 
-- (void) applicationDidFinishLaunching:(NSNotification *) aNotification {
-	// Insert code here to initialize your application
+- (BOOL) application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary<UIApplicationLaunchOptionsKey,id> *)launchOptions {
+    // Override point for customization after application launch.
+    return YES;
 }
 
 
-- (void) applicationWillTerminate:(NSNotification *)aNotification {
-	// Insert code here to tear down your application
-}
-
-
+/*
 + (void) initialize {
 	[AppDelegate registerDefaults];
 }
@@ -34,27 +28,22 @@
 
 + (void) registerDefaults {
 }
+*/
+
+#pragma mark - UISceneSession lifecycle
 
 
-#pragma mark - Preferences
-
-- (NSWindowController *) preferencesWindowController {
-    static MASPreferencesWindowController * wc;
-    static dispatch_once_t onceToken;
-
-    dispatch_once(&onceToken, ^ {
-        NSViewController * demo = [[DemoPrefsViewController alloc] init];
-        [(DemoPrefsViewController *)demo setViewIdentifier:@"Demo 1"];
-        NSViewController * demo2 = [[DemoPrefsViewController alloc] init];
-        wc = [[MASPreferencesWindowController alloc] initWithViewControllers:@[demo, demo2] title:@"Preferences"];
-    });
-
-    return wc;
+- (UISceneConfiguration *)application:(UIApplication *)application configurationForConnectingSceneSession:(UISceneSession *)connectingSceneSession options:(UISceneConnectionOptions *)options {
+    // Called when a new scene session is being created.
+    // Use this method to select a configuration to create the new scene with.
+    return [[UISceneConfiguration alloc] initWithName:@"Default Configuration" sessionRole:connectingSceneSession.role];
 }
 
 
-- (IBAction) openPreferences:(id)sender {
-    [[self preferencesWindowController] showWindow:self];
+- (void)application:(UIApplication *)application didDiscardSceneSessions:(NSSet<UISceneSession *> *)sceneSessions {
+    // Called when the user discards a scene session.
+    // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
+    // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
 }
 
 

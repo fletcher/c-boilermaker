@@ -1,14 +1,12 @@
 //
 //  ViewController.m
-//  Boilerplate macOS app
+//  Boilerplate iOS app
 //
-//  Created by Fletcher T. Penney on 3/25/20.
+//  Created by Fletcher T. Penney on 4/13/20.
 //  Copyright © 2020 Fletcher T. Penney. All rights reserved.
 //
 
 #import "ViewController.h"
-
-// #import <libBoilerplate/libBoilerplate.h>
 
 @implementation ViewController
 
@@ -16,13 +14,6 @@
 	[super viewDidLoad];
 
 	// Do any additional setup after loading the view.
-    
-   	// fprintf(stderr, "test %d\n", foo_bar(5));
-}
-
-
-- (void)setRepresentedObject:(id)representedObject {
-	[super setRepresentedObject:representedObject];
 }
 
 

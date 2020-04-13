@@ -32,10 +32,8 @@ set(src_files
 	src/main.m
 
 	src/AppDelegate.m
+	src/SceneDelegate.m
 	src/ViewController.m
-
-	src/DemoPrefsViewController.m
-	src/MASPreferencesWindowController.m
 )
 
 set(public_headers
@@ -43,17 +41,13 @@ set(public_headers
 
 set(private_headers
 	src/AppDelegate.h
+	src/SceneDelegate.h
 	src/ViewController.h
-
-	src/DemoPrefsViewController.h
-	src/MASPreferencesViewController.h
-	src/MASPreferencesWindowController.h
 )
 
 set(resources
 	resources/Main.storyboard
-
-	resources/MASPreferencesWindow.xib
+	resources/LaunchScreen.storyboard
 )
 
 set(main_storyboard
@@ -76,11 +70,14 @@ set(libraries_to_link
 set(framework_search_paths
 )
 
-# Link to Cocoa Framework?
-set (link_to_cocoa 1)
+# iOS settings
+set (CMAKE_SYSTEM_NAME iOS)
+
+# Link to UIKit Framework?
+set (link_to_uikit 1)
 
 # Enable ARC for Obj-C?
-# set (enable_arc 1)
+set (enable_arc 1)
 
 
 # =======================
@@ -135,10 +132,10 @@ target_link_libraries("${My_Project_Title}"
 	${libraries_to_link}
 )
 
-# Link to Apple Cocoa Framework?
-if (link_to_cocoa)
-	target_link_libraries("${My_Project_Title}" "-framework Cocoa")
-endif (link_to_cocoa)
+# Link to Apple UIKit Framework?
+if (link_to_uikit)
+	target_link_libraries("${My_Project_Title}" "-framework UIKit")
+endif (link_to_uikit)
 
 # Enable ARC
 if (enable_arc)

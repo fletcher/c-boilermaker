@@ -1,14 +1,14 @@
 //
 //  AppDelegate.h
-//  Boilerplate macOS app
+//  Boilerplate iOS app
 //
-//  Created by Fletcher T. Penney on 3/25/20.
+//  Created by Fletcher T. Penney on 4/13/20.
 //  Copyright © 2020 Fletcher T. Penney. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#import <UIKit/UIKit.h>
 
-@interface AppDelegate : NSObject <NSApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 
 @end

@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  SceneDelegate.h
 //  Boilerplate iOS app
 //
 //  Created by Fletcher T. Penney on 4/13/20.
@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface SceneDelegate : UIResponder <UIWindowSceneDelegate>
 
+@property (strong, nonatomic) UIWindow * window;
 
 @end
 
