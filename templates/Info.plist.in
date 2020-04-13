@@ -7,22 +7,18 @@
         <key>CFBundleDocumentTypes</key>
         <array>
                 <dict>
-                        <key>CFBundleTypeExtensions</key>
-                        <array>
-                                <string>mydoc</string>
-                        </array>
-                        <key>CFBundleTypeIconFile</key>
-                        <string></string>
+                        <key>CFBundleTypeIconFiles</key>
+                        <array/>
                         <key>CFBundleTypeName</key>
-                        <string>DocumentType</string>
-                        <key>CFBundleTypeOSTypes</key>
-                        <array>
-                                <string>????</string>
-                        </array>
+                        <string>Images</string>
                         <key>CFBundleTypeRole</key>
-                        <string>Editor</string>
-                        <key>NSDocumentClass</key>
-                        <string>Document</string>
+                        <string>Viewer</string>
+                        <key>LSHandlerRank</key>
+                        <string>Alternate</string>
+                        <key>LSItemContentTypes</key>
+                        <array>
+                                <string>public.image</string>
+                        </array>
                 </dict>
         </array>
         <key>CFBundleExecutable</key>
@@ -49,28 +45,15 @@
         <string>${MACOSX_BUNDLE_COPYRIGHT}</string>
         <key>LSMinimumSystemVersion</key>
         <string>$(MACOSX_DEPLOYMENT_TARGET)</string>
-        <key>UIApplicationSceneManifest</key>
-        <dict>
-                <key>UIApplicationSupportsMultipleScenes</key>
-                <false/>
-                <key>UISceneConfigurations</key>
-                <dict>
-                        <key>UIWindowSceneSessionRoleApplication</key>
-                        <array>
-                                <dict>
-                                        <key>UISceneConfigurationName</key>
-                                        <string>Default Configuration</string>
-                                        <key>UISceneDelegateClassName</key>
-                                        <string>SceneDelegate</string>
-                                        <key>UISceneStoryboardFile</key>
-                                        <string>Main</string>
-                                </dict>
-                        </array>
-                </dict>
-        </dict>
         <key>UILaunchStoryboardName</key>
         <string>LaunchScreen</string>
         <key>UIMainStoryboardFile</key>
         <string>${main_storyboard}</string>
+        <key>UISupportsDocumentBrowser</key>
+        <true/>
+        <key>UTImportedTypeDeclarations</key>
+        <array>
+                <dict/>
+        </array>
 </dict>
 </plist>

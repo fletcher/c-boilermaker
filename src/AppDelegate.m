@@ -7,6 +7,9 @@
 //
 
 #import "AppDelegate.h"
+#import "DocumentBrowserViewController.h"
+#import "DocumentViewController.h"
+#import "Document.h"
 
 @interface AppDelegate ()
 
@@ -30,20 +33,28 @@
 }
 */
 
-#pragma mark - UISceneSession lifecycle
 
+#pragma mark - URL Handling
 
-- (UISceneConfiguration *)application:(UIApplication *)application configurationForConnectingSceneSession:(UISceneSession *)connectingSceneSession options:(UISceneConnectionOptions *)options {
-    // Called when a new scene session is being created.
-    // Use this method to select a configuration to create the new scene with.
-    return [[UISceneConfiguration alloc] initWithName:@"Default Configuration" sessionRole:connectingSceneSession.role];
-}
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)inputURL options:(NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options {
+    // Ensure the URL is a file URL
+    if (!inputURL.isFileURL) {
+        return NO;
+    }
 
-
-- (void)application:(UIApplication *)application didDiscardSceneSessions:(NSSet<UISceneSession *> *)sceneSessions {
-    // Called when the user discards a scene session.
-    // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
-    // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
+    // Reveal / import the document at the URL
+    DocumentBrowserViewController *documentBrowserViewController = (DocumentBrowserViewController *)self.window.rootViewController;
+    [documentBrowserViewController revealDocumentAtURL:inputURL importIfNeeded:YES completion:^(NSURL * _Nullable revealedDocumentURL, NSError * _Nullable error) {
+        if (error) {
+            // Handle the error appropriately
+            NSLog(@"Failed to reveal the document at URL %@ with error: '%@'", inputURL, error);
+            return;
+        }
+        
+        // Present the Document View Controller for the revealed URL
+        [documentBrowserViewController presentDocumentAtURL:revealedDocumentURL];
+    }];
+    return YES;
 }
 
 

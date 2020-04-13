@@ -1,5 +1,5 @@
 //
-//  Document.h
+//  DocumentBrowserViewController.h
 //  FakeDocApp
 //
 //  Created by Fletcher T. Penney on 4/13/20.
@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface Document : UIDocument
-    
+@interface DocumentBrowserViewController : UIDocumentBrowserViewController
+
+- (void)presentDocumentAtURL:(NSURL *)documentURL;
+
 @end
