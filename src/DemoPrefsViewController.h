@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface DemoPrefsViewController : NSViewController <MASPreferencesViewController>
 
-@property NSString * viewIdentifier;
+@property (nonatomic) NSString * viewIdentifier;
 
 @end
 
