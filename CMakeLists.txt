@@ -33,6 +33,7 @@ set(src_files
 
 	src/AppDelegate.m
 	src/SceneDelegate.m
+	src/Document.m
 	src/ViewController.m
 )
 
@@ -42,6 +43,7 @@ set(public_headers
 set(private_headers
 	src/AppDelegate.h
 	src/SceneDelegate.h
+	src/Document.h
 	src/ViewController.h
 )
 
