@@ -46,6 +46,12 @@
 }
 
 
+- (void)viewDidAppear {
+    // No first responder when window first appears or reappears
+    [self.view.window makeFirstResponder:nil];
+}
+
+
 #pragma mark - MASPreferences
 
 - (NSImage *) toolbarItemImage {
