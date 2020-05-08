@@ -41,6 +41,7 @@ set(public_headers
 set(private_headers
 	src/bar.h
 	src/foo.h
+	version.h
 )
 
 set(resources
@@ -96,6 +97,10 @@ include_directories(${PROJECT_SOURCE_DIR}/src)
 include_directories(${PROJECT_SOURCE_DIR}/test)
 
 
+# Search build directory (for version.h)
+include_directories(${PROJECT_BINARY_DIR})
+
+
 # Configure library/framework
 
 add_library("${My_Project_Title}"
@@ -111,7 +116,6 @@ string (REPLACE ";" " " framework_search_paths_string "${framework_search_paths}
 set_target_properties("${My_Project_Title}"
 	PROPERTIES
 	PREFIX ""
-	FRAMEWORK TRUE
 	FRAMEWORK_VERSION A
 	MACOSX_FRAMEWORK_IDENTIFIER "${My_Project_Identifier}"
 	XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER "${My_Project_Identifier}"
@@ -119,6 +123,7 @@ set_target_properties("${My_Project_Title}"
 	RESOURCE "${resources}"
 	XCODE_ATTRIBUTE_FRAMEWORK_SEARCH_PATHS "${XCODE_ATTRIBUTE_FRAMEWORK_SEARCH_PATHS} ${framework_search_paths_string}"
 	PUBLIC_HEADER "${public_headers}"
+	ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}
 )
 
 # Link to other libraries
@@ -199,6 +204,12 @@ add_custom_command (
 if(hasParent)
 	# Don't create "run_tests" when we're a sub-project for something else
 else()
+	# Only create framework if we are the parent project
+	set_target_properties("${My_Project_Title}"
+		PROPERTIES
+		FRAMEWORK TRUE
+	)
+
 	if (DEFINED TEST)
 		add_definitions(-DTEST)
 
