@@ -109,6 +109,10 @@ include_directories(${PROJECT_SOURCE_DIR}/src)
 include_directories(${PROJECT_SOURCE_DIR}/test)
 
 
+# Search build directory (for version.h)
+include_directories(${PROJECT_BINARY_DIR})
+
+
 # Configure library/framework
 
 add_executable("${My_Project_Title}"
@@ -130,6 +134,8 @@ set_target_properties("${My_Project_Title}"
 	MACOSX_BUNDLE_COPYRIGHT "${My_Project_Copyright}  All rights reserved."
 	RESOURCE "${resources}"
 	XCODE_ATTRIBUTE_FRAMEWORK_SEARCH_PATHS "${XCODE_ATTRIBUTE_FRAMEWORK_SEARCH_PATHS} ${framework_search_paths_string}"
+	PUBLIC_HEADER "${public_headers}"
+	XCODE_ATTRIBUTE_INSTALL_PATH "/Applications"
 )
 
 # Link to other libraries
@@ -217,6 +223,12 @@ add_custom_command (
 if(hasParent)
 	# Don't create "run_tests" when we're a sub-project for something else
 else()
+	# Only create framework if we are the parent project
+	set_target_properties("${My_Project_Title}"
+		PROPERTIES
+		FRAMEWORK TRUE
+	)
+
 	if (DEFINED TEST)
 		add_definitions(-DTEST)
 
