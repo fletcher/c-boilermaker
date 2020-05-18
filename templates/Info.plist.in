@@ -27,7 +27,7 @@
                 <string>MacOSX</string>
         </array>
         <key>CFBundleVersion</key>
-        <string>${My_Project_Version}</string>
+        <string>${My_Build_Version}</string>
         <key>CSResourcesFileMapped</key>
         <true/>
         <key>NSHumanReadableCopyright</key>
