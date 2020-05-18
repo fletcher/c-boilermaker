@@ -26,6 +26,9 @@ set (My_Project_Copyright_Date "2020")
 
 set (My_Project_Identifier "net.fletcherpenney.boilermaker")
 
+string(TIMESTAMP My_Build_Version "%Y.%m.%d.%H.%M")
+
+
 # Source files and headers
 
 set(src_files
