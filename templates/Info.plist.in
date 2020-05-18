@@ -13,12 +13,16 @@
                         <string>Images</string>
                         <key>CFBundleTypeRole</key>
                         <string>Viewer</string>
-                        <key>LSHandlerRank</key>
-                        <string>Alternate</string>
                         <key>LSItemContentTypes</key>
                         <array>
                                 <string>public.image</string>
                         </array>
+                        <key>CFBundleTypeRole</key>
+                        <string>Editor</string>
+                        <key>LSHandlerRank</key>
+                        <string>Owner</string>
+                        <key>NSDocumentClass</key>
+                        <string>Document</string>
                 </dict>
         </array>
         <key>CFBundleExecutable</key>
