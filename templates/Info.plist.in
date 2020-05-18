@@ -21,6 +21,8 @@
                         </array>
                         <key>CFBundleTypeRole</key>
                         <string>Editor</string>
+                        <key>LSHandlerRank</key>
+                        <string>Owner</string>
                         <key>NSDocumentClass</key>
                         <string>Document</string>
                 </dict>
