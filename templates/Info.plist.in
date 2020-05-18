@@ -16,12 +16,14 @@
         <string>${MACOSX_BUNDLE_LONG_VERSION_STRING}</string>
         <key>CFBundleName</key>
         <string>${My_Project_Title}</string>
+        <key>CFBundleIconName</key>
+        <string>AppIcon</string>
         <key>CFBundlePackageType</key>
         <string>APPL</string>
         <key>CFBundleShortVersionString</key>
         <string>${My_Project_Version}</string>
         <key>CFBundleVersion</key>
-        <string>${My_Project_Version}</string>
+        <string>${My_Build_Version}</string>
         <key>CSResourcesFileMapped</key>
         <true/>
         <key>NSHumanReadableCopyright</key>
