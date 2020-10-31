@@ -84,6 +84,10 @@ set(framework_search_paths
 # Link to Cocoa Framework?
 set (link_to_cocoa 1)
 
+# Use Assets for app icon set for iOS or macOS application?
+# (Assets stored in resources/Assets.xcassets)
+# set (use_assets 1)
+
 # Enable ARC for Obj-C?
 # set (enable_arc 1)
 
@@ -150,6 +154,24 @@ target_link_libraries("${My_Project_Title}"
 if (link_to_cocoa)
 	target_link_libraries("${My_Project_Title}" "-framework Cocoa")
 endif (link_to_cocoa)
+
+# Use assets for application icons?
+if (use_assets)
+	target_sources("${My_Project_Title}"
+		PRIVATE
+		resources/Assets.xcassets
+	)
+
+	set_source_files_properties(resources/Assets.xcassets
+		PROPERTIES
+		MACOSX_PACKAGE_LOCATION Resources
+	)
+
+	set_target_properties("${My_Project_Title}"
+		PROPERTIES
+		XCODE_ATTRIBUTE_ASSETCATALOG_COMPILER_APPICON_NAME "AppIcon"
+	)
+endif (use_assets)
 
 # Enable ARC
 if (enable_arc)
