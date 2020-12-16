@@ -5,7 +5,7 @@
 #	See the LICENSE file for copyright and licensing information.
 #
 
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 2.9)
 
 
 # ===================
@@ -110,6 +110,8 @@ endif (POLICY CMP0048)
 
 project (${My_Project_Title} VERSION "${My_Project_Version}")
 
+set (CMAKE_OSX_ARCHITECTURES "$(ARCHS_STANDARD)")
+
 
 # Search source directory
 include_directories(${PROJECT_SOURCE_DIR}/src)
@@ -143,6 +145,10 @@ set_target_properties("${My_Project_Title}"
 	XCODE_ATTRIBUTE_FRAMEWORK_SEARCH_PATHS "${XCODE_ATTRIBUTE_FRAMEWORK_SEARCH_PATHS} ${framework_search_paths_string}"
 	PUBLIC_HEADER "${public_headers}"
 	XCODE_ATTRIBUTE_INSTALL_PATH "/Applications"
+	XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH[variant=Debug] YES
+	XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH[variant=MinSizeRel] NO
+	XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH[variant=RelWithDebInfo] NO
+	XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH[variant=Release] NO
 )
 
 # Link to other libraries
