@@ -105,7 +105,9 @@ endif (POLICY CMP0048)
 
 project (${My_Project_Title} VERSION "${My_Project_Version}")
 
-set (CMAKE_OSX_ARCHITECTURES "$(ARCHS_STANDARD)")
+if (CMAKE_GENERATOR MATCHES "Xcode")
+	set (CMAKE_OSX_ARCHITECTURES "$(ARCHS_STANDARD)")
+endif()
 
 
 # Search source directory
