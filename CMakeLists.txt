@@ -98,8 +98,17 @@ endif (POLICY CMP0048)
 
 project (${My_Project_Title} VERSION "${My_Project_Version}")
 
-if (CMAKE_GENERATOR MATCHES "Xcode")
-	set (CMAKE_OSX_ARCHITECTURES "$(ARCHS_STANDARD)")
+# from http://stackoverflow.com/questions/25199677/how-to-detect-if-current-scope-has-a-parent-in-cmake
+get_directory_property(hasParent PARENT_DIRECTORY)
+
+if (hasParent)
+else()
+	# If building the framework independently, we canset a deployment target
+	# set (CMAKE_OSX_DEPLOYMENT_TARGET "10.12")
+
+	if (CMAKE_GENERATOR MATCHES "Xcode")
+		set (CMAKE_OSX_ARCHITECTURES "$(ARCHS_STANDARD)")
+	endif()
 endif()
 
 
