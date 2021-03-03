@@ -220,6 +220,11 @@ configure_file (
 	"${PROJECT_BINARY_DIR}/version.h"
 )
 
+configure_file (
+	"${PROJECT_SOURCE_DIR}/templates/archive.sh.in"
+	"${PROJECT_BINARY_DIR}/archive.sh"
+)
+
 
 # ===========================================
 # Build Test Suite with CuTest (unit testing)
