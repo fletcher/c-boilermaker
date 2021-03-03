@@ -21,6 +21,15 @@ xcode: $(XCODE_BUILD_DIR)
 	cmake -G Xcode ..
 
 
+# Xcode archive
+#	`make xcode` and then make any manual modifications
+#	then `make archive`
+.PHONE : archive
+archive:
+	cd $(XCODE_BUILD_DIR); \
+	sh archive.sh
+
+
 # Xcode debug variant
 .PHONY : xcode-test
 xcode-test: $(XCODE_DEBUG_BUILD_DIR)
