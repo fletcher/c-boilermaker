@@ -47,7 +47,7 @@ test: $(DEBUG_DIR)
 # Use astyle to format source code
 .PHONY : astyle
 astyle:
-	astyle --options=.astylerc -q --recursive "src/*.h" "src/*.c"  "src/*m"
+	astyle --options=.astylerc -q --recursive "src/*.h" "src/*.c"  "src/*.m"
 
 
 # Generate a list of changes since last commit to 'master' branch

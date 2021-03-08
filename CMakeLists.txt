@@ -59,6 +59,8 @@ set(resources
 	resources/MASPreferencesWindow.xib
 )
 
+source_group("Resources" FILES ${resources})
+
 set(main_storyboard
 	Main
 )
