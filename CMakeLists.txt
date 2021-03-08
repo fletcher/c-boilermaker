@@ -53,6 +53,8 @@ set(resources
 	resources/LaunchScreen.storyboard
 )
 
+source_group("Resources" FILES ${resources})
+
 set(main_storyboard
 	Main
 )
