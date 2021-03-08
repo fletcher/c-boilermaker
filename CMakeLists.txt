@@ -50,6 +50,8 @@ set(private_headers
 set(resources
 )
 
+source_group("Resources" FILES ${resources})
+
 set(main_storyboard
 )
 
