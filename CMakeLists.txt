@@ -211,6 +211,11 @@ configure_file (
 	"${PROJECT_BINARY_DIR}/template.h"
 )
 
+configure_file (
+	"${PROJECT_SOURCE_DIR}/templates/main.c.in"
+	"${PROJECT_BINARY_DIR}/main.c"
+)
+
 # Update the project README, to pull in new version #, etc.
 configure_file (
 	"${PROJECT_SOURCE_DIR}/templates/README.md.in"
