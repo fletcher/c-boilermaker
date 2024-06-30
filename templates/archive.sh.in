@@ -1,1 +1,1 @@
-xcodebuild -scheme @My_Project_Title@ clean archive -configuration Release
+xcodebuild ONLY_ACTIVE_ARCH=NO q-scheme @My_Project_Title@ clean archive -configuration Release

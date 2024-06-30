@@ -114,8 +114,8 @@ get_directory_property(hasParent PARENT_DIRECTORY)
 
 if (hasParent)
 else()
-	# If building the framework independently, we canset a deployment target
-	# set (CMAKE_OSX_DEPLOYMENT_TARGET "10.12")
+	# If building the framework independently, we can set a deployment target
+	# set (CMAKE_OSX_DEPLOYMENT_TARGET "10.13")
 
 	if (CMAKE_GENERATOR MATCHES "Xcode")
 		set (CMAKE_OSX_ARCHITECTURES "$(ARCHS_STANDARD)")
@@ -225,6 +225,11 @@ configure_file (
 configure_file (
 	"${PROJECT_SOURCE_DIR}/templates/template.h.in"
 	"${PROJECT_BINARY_DIR}/template.h"
+)
+
+configure_file (
+	"${PROJECT_SOURCE_DIR}/templates/main.c.in"
+	"${PROJECT_BINARY_DIR}/main.c"
 )
 
 # Update the project README, to pull in new version #, etc.
