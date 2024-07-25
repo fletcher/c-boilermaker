@@ -168,6 +168,7 @@ if (link_to_cocoa)
 endif (link_to_cocoa)
 
 if (hasParent)
+else()
 	# Use assets for application icons?
 	if (use_assets)
 		target_sources("${My_Project_Title}"
