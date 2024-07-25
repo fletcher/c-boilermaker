@@ -6,7 +6,7 @@
 #	See the LICENSE file for copyright and licensing information.
 #
 
-cmake_minimum_required(VERSION 2.9)
+cmake_minimum_required(VERSION 3.29)
 
 
 # ===================
@@ -100,6 +100,10 @@ endif (POLICY CMP0048)
 
 project (${My_Project_Title} VERSION "${My_Project_Version}")
 
+if (CMAKE_GENERATOR MATCHES "Xcode")
+	set (CMAKE_OSX_ARCHITECTURES "$(ARCHS_STANDARD)")
+endif()
+
 # from http://stackoverflow.com/questions/25199677/how-to-detect-if-current-scope-has-a-parent-in-cmake
 get_directory_property(hasParent PARENT_DIRECTORY)
 
@@ -107,10 +111,6 @@ if (hasParent)
 else()
 	# If building the framework independently, we can set a deployment target
 	# set (CMAKE_OSX_DEPLOYMENT_TARGET "10.13")
-
-	if (CMAKE_GENERATOR MATCHES "Xcode")
-		set (CMAKE_OSX_ARCHITECTURES "$(ARCHS_STANDARD)")
-	endif()
 endif()
 
 
@@ -146,10 +146,15 @@ set_target_properties("${My_Project_Title}"
 	XCODE_ATTRIBUTE_FRAMEWORK_SEARCH_PATHS "${XCODE_ATTRIBUTE_FRAMEWORK_SEARCH_PATHS} ${framework_search_paths_string}"
 	PUBLIC_HEADER "${public_headers}"
 	ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}
+
 	XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH[variant=Debug] YES
 	XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH[variant=MinSizeRel] NO
 	XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH[variant=RelWithDebInfo] NO
 	XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH[variant=Release] NO
+
+	XCODE_ATTRIBUTE_SDKROOT auto
+	XCODE_ATTRIBUTE_SUPPORTED_PLATFORMS "iphoneos iphonesimulator macosx"
+	XCODE_ATTRIBUTE_TARGETED_DEVICE_FAMILY "1,2"
 )
 
 # Link to other libraries
@@ -162,30 +167,32 @@ if (link_to_cocoa)
 	target_link_libraries("${My_Project_Title}" "-framework Cocoa")
 endif (link_to_cocoa)
 
-# Use assets for application icons?
-if (use_assets)
-	target_sources("${My_Project_Title}"
-		PRIVATE
-		resources/Assets.xcassets
-	)
+if (hasParent)
+	# Use assets for application icons?
+	if (use_assets)
+		target_sources("${My_Project_Title}"
+			PRIVATE
+			resources/Assets.xcassets
+		)
 
-	set_source_files_properties(resources/Assets.xcassets
-		PROPERTIES
-		MACOSX_PACKAGE_LOCATION Resources
-	)
+		set_source_files_properties(resources/Assets.xcassets
+			PROPERTIES
+			MACOSX_PACKAGE_LOCATION Resources
+		)
 
-	set_target_properties("${My_Project_Title}"
-		PROPERTIES
-		XCODE_ATTRIBUTE_ASSETCATALOG_COMPILER_APPICON_NAME "AppIcon"
-	)
-endif (use_assets)
+		set_target_properties("${My_Project_Title}"
+			PROPERTIES
+			XCODE_ATTRIBUTE_ASSETCATALOG_COMPILER_APPICON_NAME "AppIcon"
+		)
+	endif (use_assets)
 
-# Enable ARC
-if (enable_arc)
-	set_property (TARGET "${My_Project_Title}"
-		APPEND_STRING PROPERTY COMPILE_FLAGS "-fobjc-arc"
-	)
-endif (enable_arc)
+	# Enable ARC
+	if (enable_arc)
+		set_property (TARGET "${My_Project_Title}"
+			APPEND_STRING PROPERTY COMPILE_FLAGS "-fobjc-arc"
+		)
+	endif (enable_arc)
+endif()
 
 
 # ======================
@@ -301,6 +308,27 @@ else()
 	#
 	#	add_test( memory_test ${MEMORYCHECK_COMMAND} ${MEMORYCHECK_COMMAND_OPTIONS} ${PROJECT_BINARY_DIR}/run_tests)
 
+	else()
+		add_executable(command_name
+			src/main
+		)
+
+		target_link_libraries(command_name PRIVATE "${My_Project_Title}")
+
+		set_target_properties(command_name
+			PROPERTIES
+			PREFIX ""
+			XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER "${My_Project_Identifier}"
+			XCODE_ATTRIBUTE_MARKETING_VERSION ${My_Project_Version}
+			RESOURCE "${resources}"
+
+			XCODE_ATTRIBUTE_FRAMEWORK_SEARCH_PATHS "${XCODE_ATTRIBUTE_FRAMEWORK_SEARCH_PATHS} ${framework_search_paths_string}"
+
+			XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH[variant=Debug] YES
+			XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH[variant=MinSizeRel] NO
+			XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH[variant=RelWithDebInfo] NO
+			XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH[variant=Release] NO
+		)
 	endif()
 endif()
 
