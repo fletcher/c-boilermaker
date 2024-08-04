@@ -27,7 +27,8 @@ set (My_Project_Copyright_Date "2020")
 
 set (My_Project_Identifier "net.fletcherpenney.libboilermaker")
 
-string(TIMESTAMP My_Build_Version "%Y.%m.%d.%H.%M")
+string(TIMESTAMP My_Build_Version "%Y%m%d.%H.%M" UTC)
+string(TIMESTAMP My_Build_Date "%Y-%m-%d" UTC)
 
 
 # Source files and headers
@@ -94,6 +95,8 @@ set (My_Project_Copyright "Copyright © ${My_Project_Copyright_Date} ${My_Projec
 string(TOUPPER ${My_Project_Title} My_Project_Title_Caps  )
 string(REGEX REPLACE " " "_" My_Project_Title_Caps ${My_Project_Title_Caps} )
 
+string(REGEX REPLACE " " "" My_Project_Title_Clean ${My_Project_Title} )
+
 if (POLICY CMP0048)
   cmake_policy(SET CMP0048 NEW)
 endif (POLICY CMP0048)
@@ -135,7 +138,7 @@ add_library("${My_Project_Title}"
 
 string (REPLACE ";" " " framework_search_paths_string "${framework_search_paths}")
 
-set_target_properties("${My_Project_Title}"
+set_target_properties("${My_Project_Title_Clean}"
 	PROPERTIES
 	PREFIX ""
 	FRAMEWORK_VERSION A
