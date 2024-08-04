@@ -5,7 +5,7 @@
 #	See the LICENSE file for copyright and licensing information.
 #
 
-cmake_minimum_required(VERSION 2.9)
+cmake_minimum_required(VERSION 3.29)
 
 
 # ===================
@@ -26,7 +26,8 @@ set (My_Project_Copyright_Date "2020")
 
 set (My_Project_Identifier "net.fletcherpenney.boilermaker")
 
-string(TIMESTAMP My_Build_Version "%Y.%m.%d.%H.%M")
+string(TIMESTAMP My_Build_Version "%Y%m%d.%H.%M" UTC)
+string(TIMESTAMP My_Build_Date "%Y-%m-%d" UTC)
 
 
 # Source files and headers
@@ -106,11 +107,17 @@ set (My_Project_Copyright "Copyright © ${My_Project_Copyright_Date} ${My_Projec
 string(TOUPPER ${My_Project_Title} My_Project_Title_Caps  )
 string(REGEX REPLACE " " "_" My_Project_Title_Caps ${My_Project_Title_Caps} )
 
+string(REGEX REPLACE " " "" My_Project_Title_Clean ${My_Project_Title} )
+
 if (POLICY CMP0048)
   cmake_policy(SET CMP0048 NEW)
 endif (POLICY CMP0048)
 
 project (${My_Project_Title} VERSION "${My_Project_Version}")
+
+if (CMAKE_GENERATOR MATCHES "Xcode")
+	set (CMAKE_OSX_ARCHITECTURES "$(ARCHS_STANDARD)")
+endif()
 
 # from http://stackoverflow.com/questions/25199677/how-to-detect-if-current-scope-has-a-parent-in-cmake
 get_directory_property(hasParent PARENT_DIRECTORY)
@@ -119,10 +126,6 @@ if (hasParent)
 else()
 	# If building the framework independently, we can set a deployment target
 	# set (CMAKE_OSX_DEPLOYMENT_TARGET "10.13")
-
-	if (CMAKE_GENERATOR MATCHES "Xcode")
-		set (CMAKE_OSX_ARCHITECTURES "$(ARCHS_STANDARD)")
-	endif()
 endif()
 
 
@@ -147,7 +150,7 @@ add_executable("${My_Project_Title}"
 
 string (REPLACE ";" " " framework_search_paths_string "${framework_search_paths}")
 
-set_target_properties("${My_Project_Title}"
+set_target_properties("${My_Project_Title_Clean}"
 	PROPERTIES
 	MACOSX_BUNDLE TRUE
 	XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER "${My_Project_Identifier}"
@@ -158,10 +161,16 @@ set_target_properties("${My_Project_Title}"
 	XCODE_ATTRIBUTE_FRAMEWORK_SEARCH_PATHS "${XCODE_ATTRIBUTE_FRAMEWORK_SEARCH_PATHS} ${framework_search_paths_string}"
 	PUBLIC_HEADER "${public_headers}"
 	XCODE_ATTRIBUTE_INSTALL_PATH "/Applications"
+	ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}
+
 	XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH[variant=Debug] YES
 	XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH[variant=MinSizeRel] NO
 	XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH[variant=RelWithDebInfo] NO
 	XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH[variant=Release] NO
+
+	XCODE_ATTRIBUTE_SDKROOT auto
+	XCODE_ATTRIBUTE_SUPPORTED_PLATFORMS "iphoneos iphonesimulator macosx"
+	XCODE_ATTRIBUTE_TARGETED_DEVICE_FAMILY "1,2"
 )
 
 # Link to other libraries
@@ -174,30 +183,33 @@ if (link_to_cocoa)
 	target_link_libraries("${My_Project_Title}" "-framework Cocoa")
 endif (link_to_cocoa)
 
-# Use assets for application icons?
-if (use_assets)
-	target_sources("${My_Project_Title}"
-		PRIVATE
-		resources/Assets.xcassets
-	)
+if (hasParent)
+else()
+	# Use assets for application icons?
+	if (use_assets)
+		target_sources("${My_Project_Title}"
+			PRIVATE
+			resources/Assets.xcassets
+		)
 
-	set_source_files_properties(resources/Assets.xcassets
-		PROPERTIES
-		MACOSX_PACKAGE_LOCATION Resources
-	)
+		set_source_files_properties(resources/Assets.xcassets
+			PROPERTIES
+			MACOSX_PACKAGE_LOCATION Resources
+		)
 
-	set_target_properties("${My_Project_Title}"
-		PROPERTIES
-		XCODE_ATTRIBUTE_ASSETCATALOG_COMPILER_APPICON_NAME "AppIcon"
-	)
-endif (use_assets)
+		set_target_properties("${My_Project_Title}"
+			PROPERTIES
+			XCODE_ATTRIBUTE_ASSETCATALOG_COMPILER_APPICON_NAME "AppIcon"
+		)
+	endif (use_assets)
 
-# Enable ARC
-if (enable_arc)
-	set_property (TARGET "${My_Project_Title}"
-		APPEND_STRING PROPERTY COMPILE_FLAGS "-fobjc-arc"
-	)
-endif (enable_arc)
+	# Enable ARC
+	if (enable_arc)
+		set_property (TARGET "${My_Project_Title}"
+			APPEND_STRING PROPERTY COMPILE_FLAGS "-fobjc-arc"
+		)
+	endif (enable_arc)
+endif()
 
 # Use custom Info.plist template
 # Original was here:
@@ -320,6 +332,27 @@ else()
 	#
 	#	add_test( memory_test ${MEMORYCHECK_COMMAND} ${MEMORYCHECK_COMMAND_OPTIONS} ${PROJECT_BINARY_DIR}/run_tests)
 
+	else()
+		add_executable(command_name
+			src/main
+		)
+
+		target_link_libraries(command_name PRIVATE "${My_Project_Title}")
+
+		set_target_properties(command_name
+			PROPERTIES
+			PREFIX ""
+			XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER "${My_Project_Identifier}"
+			XCODE_ATTRIBUTE_MARKETING_VERSION ${My_Project_Version}
+			RESOURCE "${resources}"
+
+			XCODE_ATTRIBUTE_FRAMEWORK_SEARCH_PATHS "${XCODE_ATTRIBUTE_FRAMEWORK_SEARCH_PATHS} ${framework_search_paths_string}"
+
+			XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH[variant=Debug] YES
+			XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH[variant=MinSizeRel] NO
+			XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH[variant=RelWithDebInfo] NO
+			XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH[variant=Release] NO
+		)
 	endif()
 endif()
 
