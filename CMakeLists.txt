@@ -128,7 +128,7 @@ include_directories(${PROJECT_BINARY_DIR})
 
 # Configure library/framework
 
-add_library("${My_Project_Title}"
+add_library("${My_Project_Title_Clean}"
 	STATIC
 	${src_files}
 	${private_headers}
@@ -161,20 +161,20 @@ set_target_properties("${My_Project_Title_Clean}"
 )
 
 # Link to other libraries
-target_link_libraries("${My_Project_Title}"
+target_link_libraries("${My_Project_Title_Clean}"
 	${libraries_to_link}
 )
 
 # Link to Apple Cocoa Framework?
 if (link_to_cocoa)
-	target_link_libraries("${My_Project_Title}" "-framework Cocoa")
+	target_link_libraries("${My_Project_Title_Clean}" "-framework Cocoa")
 endif (link_to_cocoa)
 
 if (hasParent)
 else()
 	# Use assets for application icons?
 	if (use_assets)
-		target_sources("${My_Project_Title}"
+		target_sources("${My_Project_Title_Clean}"
 			PRIVATE
 			resources/Assets.xcassets
 		)
@@ -184,7 +184,7 @@ else()
 			MACOSX_PACKAGE_LOCATION Resources
 		)
 
-		set_target_properties("${My_Project_Title}"
+		set_target_properties("${My_Project_Title_Clean}"
 			PROPERTIES
 			XCODE_ATTRIBUTE_ASSETCATALOG_COMPILER_APPICON_NAME "AppIcon"
 		)
@@ -192,7 +192,7 @@ else()
 
 	# Enable ARC
 	if (enable_arc)
-		set_property (TARGET "${My_Project_Title}"
+		set_property (TARGET "${My_Project_Title_Clean}"
 			APPEND_STRING PROPERTY COMPILE_FLAGS "-fobjc-arc"
 		)
 	endif (enable_arc)
@@ -270,7 +270,7 @@ if(hasParent)
 	# Don't create "run_tests" when we're a sub-project for something else
 else()
 	# Only create framework if we are the parent project
-	set_target_properties("${My_Project_Title}"
+	set_target_properties("${My_Project_Title_Clean}"
 		PROPERTIES
 		FRAMEWORK TRUE
 	)
@@ -314,7 +314,7 @@ else()
 
 	else()
 		add_executable(command_name
-			src/main
+			src/main.c
 		)
 
 		target_link_libraries(command_name PRIVATE "${My_Project_Title}")
@@ -386,7 +386,7 @@ else()
 	endif (APPLE)
 
 	# Install Target
-	install (TARGETS ${My_Project_Title}
+	install (TARGETS ${My_Project_Title_Clean}
 		DESTINATION bin
 		COMPONENT Main
 	)
