@@ -2,10 +2,10 @@
 
 |            |                           |  
 | ---------- | ------------------------- |  
-| Title:     | libBoilermaker        |  
+| Title:     | libPratt        |  
 | Author:    | Fletcher T. Penney       |  
-| Date:      | 2020-04-11 |  
-| Copyright: | Copyright © 2020 Fletcher T. Penney.    |  
+| Date:      | 2025-05-03 |  
+| Copyright: | Copyright © 2025 Fletcher T. Penney.    |  
 | Version:   | 1.0.0      |  
 
 

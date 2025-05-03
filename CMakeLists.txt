@@ -15,17 +15,17 @@ cmake_minimum_required(VERSION 3.29)
 
 # Project Description
 
-set (My_Project_Title "libBoilermaker")
-set (My_Project_Description "Standardized configuration to simplify your life")
+set (My_Project_Title "libPratt")
+set (My_Project_Description "Boilerplate starting point for a Pratt parser")
 set (My_Project_Author "Fletcher T. Penney")
-set (My_Project_Revised_Date "2020-04-11")
+set (My_Project_Revised_Date "2025-05-03")
 set (My_Project_Version_Major 1)
 set (My_Project_Version_Minor 0)
 set (My_Project_Version_Patch 0)
 
-set (My_Project_Copyright_Date "2020")
+set (My_Project_Copyright_Date "2025")
 
-set (My_Project_Identifier "net.fletcherpenney.libboilermaker")
+set (My_Project_Identifier "net.fletcherpenney.libpratt")
 
 string(TIMESTAMP My_Build_Version "%Y%m%d.%H.%M" UTC)
 string(TIMESTAMP My_Build_Date "%Y-%m-%d" UTC)
@@ -34,17 +34,20 @@ string(TIMESTAMP My_Build_Date "%Y-%m-%d" UTC)
 # Source files and headers
 
 set(src_files
-	src/bar.c
-	src/foo.c
+	src/pratt.c
+	src/scanner.c
+	src/text_buffer.c
 )
 
 set(public_headers
-	src/libBoilerplate.h
+	src/libPratt.h
 )
 
 set(private_headers
-	src/bar.h
-	src/foo.h
+	src/pratt.h
+	src/scanner.h
+	src/text_buffer.h
+
 	version.h
 )
 
@@ -313,13 +316,13 @@ else()
 	#	add_test( memory_test ${MEMORYCHECK_COMMAND} ${MEMORYCHECK_COMMAND_OPTIONS} ${PROJECT_BINARY_DIR}/run_tests)
 
 	else()
-		add_executable(command_name
+		add_executable(pratt
 			src/main.c
 		)
 
-		target_link_libraries(command_name PRIVATE "${My_Project_Title}")
+		target_link_libraries(pratt PRIVATE "${My_Project_Title}")
 
-		set_target_properties(command_name
+		set_target_properties(pratt
 			PROPERTIES
 			PREFIX ""
 			XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER "${My_Project_Identifier}"
