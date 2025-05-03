@@ -37,6 +37,7 @@ void Test_foo(CuTest * tc) {
 
 	CuAssertIntEquals(tc, 30, test);
 }
+
 #endif
 
 
@@ -51,4 +52,5 @@ void Test_foo_bar(CuTest * tc) {
 
 	CuAssertIntEquals(tc, 40, test);
 }
+
 #endif

@@ -29,3 +29,10 @@ build-xcode-test
 *.xcbkptlist
 
 *.orig
+
+knuth/*
+!knuth/dlx1.w
+!knuth/dlx2.w
+!knuth/dlx3.w
+!knuth/gb_flip.w
+!knuth/boilerplate.w

@@ -38,4 +38,5 @@ void Test_bar(CuTest * tc) {
 
 	CuAssertIntEquals(tc, 20, test);
 }
+
 #endif
