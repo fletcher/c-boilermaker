@@ -34,7 +34,11 @@ string(TIMESTAMP My_Build_Date "%Y-%m-%d" UTC)
 # Source files and headers
 
 set(src_files
-	src/pratt.c
+#	src/pratt.c
+
+	src/pratt_node.c
+	src/node.c
+
 	src/scanner.c
 	src/text_buffer.c
 )
@@ -44,7 +48,11 @@ set(public_headers
 )
 
 set(private_headers
-	src/pratt.h
+#	src/pratt.h
+
+	src/pratt_node.h
+	src/node.h
+
 	src/scanner.h
 	src/text_buffer.h
 
