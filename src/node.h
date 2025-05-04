@@ -76,6 +76,7 @@ node * node_new(node_type t);
 void node_free(node * n);
 
 void ast_prefix(FILE * stream, node * n);
+void ast_prefix_indented(FILE * stream, node * n);
 
 node * binary_node(node_type t, node * first, node * second);
 node * unary_node(node_type t, node * first);

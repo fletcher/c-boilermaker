@@ -198,6 +198,7 @@ int pratt_string(const char * text) {
 		// Recursively parse each expression and print result
 		n = expr(&s, BP_NONE);
 		ast_prefix(stdout, n);
+		ast_prefix_indented(stdout, n);
 		node_free(n);
 	} while (s.curType);
 

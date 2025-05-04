@@ -54,6 +54,9 @@
 #endif
 
 
+#define F(i,n) for(int i= 0;i<n;i++)
+
+
 /// strndup not available on all platforms
 static char * my_strndup(const char * source, size_t n) {
 	if (source == NULL) {
@@ -223,3 +226,50 @@ void ast_prefix(FILE * stream, node * n) {
 	}
 }
 
+
+static void node_prefix_indented(FILE * stream, node * n, int depth) {
+	if (n) {
+		F(i, depth) {
+			fprintf(stream, "\t");
+		}
+
+		switch (n->type) {
+			case NODE_INTEGER:
+				fprintf(stream, "%d\n", n->payload.integer);
+				break;
+
+			case NODE_TEXT:
+				fprintf(stream, "%s\n", n->payload.text);
+				break;
+
+			default:
+				fprintf(stream, "(%s \n", nodes[n->type].label);
+
+				node_prefix_indented(stream, n->first, depth + 1);
+
+				if (nodes[n->type].isBinary) {
+					node_prefix_indented(stream, n->second, depth + 1);
+				} else if (n->second) {
+					fprintf(stream, "*unexpected second*=>");
+					node_prefix_indented(stream, n->second, depth + 1);
+				}
+
+				F(i, depth) {
+					fprintf(stream, "\t");
+				}
+
+				fprintf(stream, ")\n");
+				break;
+		}
+	}
+}
+
+
+void ast_prefix_indented(FILE * stream, node * n) {
+	if (n) {
+		node_prefix_indented(stream, n, 0);
+		fprintf(stream, "\n");
+	} else {
+		fprintf(stream, "null AST\n");
+	}
+}
